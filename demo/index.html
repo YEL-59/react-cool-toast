@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Cool Toast Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        .demo-section h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .demo-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .success-btn {
+            background: #48bb78;
+            color: white;
+        }
+
+        .error-btn {
+            background: #f56565;
+            color: white;
+        }
+
+        .warning-btn {
+            background: #ed8936;
+            color: white;
+        }
+
+        .info-btn {
+            background: #4299e1;
+            color: white;
+        }
+
+        .loading-btn {
+            background: #9f7aea;
+            color: white;
+        }
+
+        .promise-btn {
+            background: #38b2ac;
+            color: white;
+        }
+
+        .custom-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+        }
+
+        .dismiss-btn {
+            background: #718096;
+            color: white;
+        }
+
+        .code-example {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        .code-example pre {
+            margin: 0;
+            color: #2d3748;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4299e1;
+        }
+
+        .feature-item h3 {
+            margin: 0 0 10px 0;
+            color: #2d3748;
+        }
+
+        .feature-item p {
+            margin: 0;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .github-link {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .github-link a {
+            display: inline-block;
+            background: #2d3748;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .github-link a:hover {
+            background: #1a202c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🍞 React Cool Toast</h1>
+        <p class="subtitle">A beautiful, customizable toast notification library for React</p>
+
+        <div class="demo-section">
+            <h2>Basic Toast Types</h2>
+            <div class="button-grid">
+                <button class="demo-button success-btn" onclick="showSuccess()">
+                    ✅ Success Toast
+                </button>
+                <button class="demo-button error-btn" onclick="showError()">
+                    ❌ Error Toast
+                </button>
+                <button class="demo-button warning-btn" onclick="showWarning()">
+                    ⚠️ Warning Toast
+                </button>
+                <button class="demo-button info-btn" onclick="showInfo()">
+                    ℹ️ Info Toast
+                </button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Advanced Features</h2>
+            <div class="button-grid">
+                <button class="demo-button loading-btn" onclick="showLoading()">
+                    ⏳ Loading Toast
+                </button>
+                <button class="demo-button promise-btn" onclick="showPromise()">
+                    🔄 Promise Toast
+                </button>
+                <button class="demo-button custom-btn" onclick="showCustom()">
+                    🎨 Custom Toast
+                </button>
+                <button class="demo-button dismiss-btn" onclick="dismissAll()">
+                    🗑️ Dismiss All
+                </button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Code Examples</h2>
+            <div class="code-example">
+                <pre><code>// Basic usage
+import toast from 'react-cool-toast';
+
+// Simple toast
+toast('Hello World!');
+
+// Success toast
+toast.success('Operation completed!');
+
+// Error toast
+toast.error('Something went wrong!');
+
+// Promise-based toast
+toast.promise(
+  fetch('/api/data'),
+  {
+    loading: 'Loading...',
+    success: 'Data loaded!',
+    error: 'Failed to load data'
+  }
+);
+
+// Custom toast
+toast('Custom message', {
+  type: 'info',
+  icon: '🎉',
+  duration: 5000,
+  position: 'bottom-center'
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="feature-list">
+            <div class="feature-item">
+                <h3>🎨 Beautiful Design</h3>
+                <p>Clean, modern styling with smooth animations and customizable themes</p>
+            </div>
+            <div class="feature-item">
+                <h3>🚀 Lightweight</h3>
+                <p>Zero dependencies, minimal bundle size for optimal performance</p>
+            </div>
+            <div class="feature-item">
+                <h3>📱 Responsive</h3>
+                <p>Works perfectly on mobile, tablet, and desktop devices</p>
+            </div>
+            <div class="feature-item">
+                <h3>♿ Accessible</h3>
+                <p>Built with accessibility in mind, supports screen readers and keyboard navigation</p>
+            </div>
+            <div class="feature-item">
+                <h3>🎯 Flexible Positioning</h3>
+                <p>6 different positions to choose from for optimal user experience</p>
+            </div>
+            <div class="feature-item">
+                <h3>📦 TypeScript</h3>
+                <p>Full TypeScript support with comprehensive type definitions</p>
+            </div>
+        </div>
+
+        <div class="github-link">
+            <a href="https://github.com/YEL-59/react-cool-toast" target="_blank">
+                📦 View on GitHub
+            </a>
+        </div>
+    </div>
+
+    <!-- React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Our toast library -->
+    <script type="text/babel">
+        // Toast implementation (simplified version for demo)
+        class ToastManager {
+            constructor() {
+                this.toasts = [];
+                this.container = null;
+                this.init();
+            }
+
+            init() {
+                // Create toast container
+                this.container = document.createElement('div');
+                this.container.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 10000;
+                    pointer-events: none;
+                `;
+                document.body.appendChild(this.container);
+            }
+
+            show(message, type = 'info', options = {}) {
+                const id = Math.random().toString(36).substr(2, 9);
+                const toast = {
+                    id,
+                    message,
+                    type,
+                    duration: options.duration || 4000,
+                    ...options
+                };
+
+                this.toasts.push(toast);
+                this.render();
+
+                // Auto dismiss
+                if (toast.duration > 0) {
+                    setTimeout(() => {
+                        this.dismiss(id);
+                    }, toast.duration);
+                }
+
+                return id;
+            }
+
+            dismiss(id) {
+                this.toasts = this.toasts.filter(toast => toast.id !== id);
+                this.render();
+            }
+
+            dismissAll() {
+                this.toasts = [];
+                this.render();
+            }
+
+            render() {
+                this.container.innerHTML = '';
+                this.toasts.forEach(toast => {
+                    const toastEl = this.createToastElement(toast);
+                    this.container.appendChild(toastEl);
+                });
+            }
+
+            createToastElement(toast) {
+                const el = document.createElement('div');
+                el.style.cssText = `
+                    background: white;
+                    border-radius: 8px;
+                    padding: 12px 16px;
+                    margin: 8px 0;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    border-left: 4px solid ${this.getTypeColor(toast.type)};
+                    min-width: 300px;
+                    max-width: 400px;
+                    pointer-events: auto;
+                    cursor: pointer;
+                    transform: translateX(100%);
+                    transition: transform 0.3s ease;
+                `;
+
+                el.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 20px;">${this.getTypeIcon(toast.type)}</span>
+                        <span style="flex: 1; color: #374151; font-size: 14px;">${toast.message}</span>
+                        <button onclick="toastManager.dismiss('${toast.id}')" style="
+                            background: none;
+                            border: none;
+                            cursor: pointer;
+                            color: #6b7280;
+                            font-size: 16px;
+                            padding: 4px;
+                        ">×</button>
+                    </div>
+                `;
+
+                // Animate in
+                setTimeout(() => {
+                    el.style.transform = 'translateX(0)';
+                }, 10);
+
+                // Click to dismiss
+                el.addEventListener('click', () => {
+                    this.dismiss(toast.id);
+                });
+
+                return el;
+            }
+
+            getTypeColor(type) {
+                const colors = {
+                    success: '#48bb78',
+                    error: '#f56565',
+                    warning: '#ed8936',
+                    info: '#4299e1',
+                    loading: '#9f7aea'
+                };
+                return colors[type] || colors.info;
+            }
+
+            getTypeIcon(type) {
+                const icons = {
+                    success: '✅',
+                    error: '❌',
+                    warning: '⚠️',
+                    info: 'ℹ️',
+                    loading: '⏳'
+                };
+                return icons[type] || icons.info;
+            }
+        }
+
+        // Initialize toast manager
+        const toastManager = new ToastManager();
+
+        // Demo functions
+        function showSuccess() {
+            toastManager.show('Operation completed successfully!', 'success');
+        }
+
+        function showError() {
+            toastManager.show('Something went wrong! Please try again.', 'error');
+        }
+
+        function showWarning() {
+            toastManager.show('Please check your input before proceeding.', 'warning');
+        }
+
+        function showInfo() {
+            toastManager.show('Here is some useful information for you.', 'info');
+        }
+
+        function showLoading() {
+            const id = toastManager.show('Processing your request...', 'loading', { duration: 0 });
+            setTimeout(() => {
+                toastManager.dismiss(id);
+                toastManager.show('Processing complete!', 'success');
+            }, 3000);
+        }
+
+        function showPromise() {
+            const promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    Math.random() > 0.5 ? resolve('Success!') : reject(new Error('Failed!'));
+                }, 2000);
+            });
+
+            const loadingId = toastManager.show('Loading...', 'loading', { duration: 0 });
+
+            promise
+                .then((data) => {
+                    toastManager.dismiss(loadingId);
+                    toastManager.show(`Success: ${data}`, 'success');
+                })
+                .catch((error) => {
+                    toastManager.dismiss(loadingId);
+                    toastManager.show(`Error: ${error.message}`, 'error');
+                });
+        }
+
+        function showCustom() {
+            toastManager.show('🎉 Custom toast with emoji!', 'info', { duration: 5000 });
+        }
+
+        function dismissAll() {
+            toastManager.dismissAll();
+        }
+
+        // Show welcome message
+        setTimeout(() => {
+            toastManager.show('Welcome to React Cool Toast! 🍞', 'success');
+        }, 500);
+    </script>
+</body>
+
+</html>

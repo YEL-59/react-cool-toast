@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react';
 import { Toast, ToastContextType, ToastPosition } from './types';
+import { setToastFunctions } from './toast';
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
@@ -13,6 +14,10 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
   defaultPosition = 'top-right' 
 }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
+
+  const removeToast = useCallback((id: string) => {
+    setToasts(prev => prev.filter(toast => toast.id !== id));
+  }, []);
 
   const addToast = useCallback((toast: Omit<Toast, 'id' | 'createdAt'>) => {
     const id = Math.random().toString(36).substr(2, 9);
@@ -33,11 +38,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     }
 
     return id;
-  }, [defaultPosition]);
-
-  const removeToast = useCallback((id: string) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id));
-  }, []);
+  }, [defaultPosition, removeToast]);
 
   const updateToast = useCallback((id: string, updates: Partial<Toast>) => {
     setToasts(prev => 
@@ -58,6 +59,16 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     updateToast,
     clearToasts,
   };
+
+  // Set global toast functions
+  useEffect(() => {
+    setToastFunctions({
+      addToast,
+      removeToast,
+      updateToast,
+      clearToasts,
+    });
+  }, [addToast, removeToast, updateToast, clearToasts]);
 
   return (
     <ToastContext.Provider value={value}>

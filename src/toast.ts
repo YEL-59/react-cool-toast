@@ -1,9 +1,9 @@
-import { ToastOptions, ToastType, ToastPosition } from './types';
+import { ToastOptions } from './types';
 
 // Global toast functions that will be set by the provider
-let addToast: ((toast: Omit<import('./types').Toast, 'id' | 'createdAt'>) => string) | null = null;
-let removeToast: ((id: string) => void) | null = null;
-let updateToast: ((id: string, updates: Partial<import('./types').Toast>) => void) | null = null;
+let addToast: ((_toast: Omit<import('./types').Toast, 'id' | 'createdAt'>) => string) | null = null;
+let removeToast: ((_id: string) => void) | null = null;
+let updateToast: ((_id: string, _updates: Partial<import('./types').Toast>) => void) | null = null;
 let clearToasts: (() => void) | null = null;
 
 // Set the toast functions (called by ToastProvider)
@@ -65,8 +65,8 @@ toast.promise = <T>(
   promise: Promise<T>,
   messages: {
     loading: string | React.ReactNode;
-    success: string | React.ReactNode | ((data: T) => string | React.ReactNode);
-    error: string | React.ReactNode | ((error: any) => string | React.ReactNode);
+    success: string | React.ReactNode | ((_data: T) => string | React.ReactNode);
+    error: string | React.ReactNode | ((_error: any) => string | React.ReactNode);
   },
   options: Omit<ToastOptions, 'type' | 'duration'> = {}
 ) => {
@@ -74,10 +74,10 @@ toast.promise = <T>(
 
   return promise
     .then((data) => {
-      const successMessage = typeof messages.success === 'function' 
-        ? messages.success(data) 
+      const successMessage = typeof messages.success === 'function'
+        ? messages.success(data)
         : messages.success;
-      
+
       if (updateToast) {
         updateToast(loadingId, {
           type: 'success',
@@ -88,10 +88,10 @@ toast.promise = <T>(
       return data;
     })
     .catch((error) => {
-      const errorMessage = typeof messages.error === 'function' 
-        ? messages.error(error) 
+      const errorMessage = typeof messages.error === 'function'
+        ? messages.error(error)
         : messages.error;
-      
+
       if (updateToast) {
         updateToast(loadingId, {
           type: 'error',

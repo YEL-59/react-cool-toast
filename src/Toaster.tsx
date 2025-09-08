@@ -1,6 +1,6 @@
 import React from 'react';
 import { useToast } from './ToastContext';
-import { Toast } from './Toast';
+import { ToastComponent } from './ToastComponent';
 import { ToasterProps } from './types';
 import './Toaster.css';
 
@@ -27,7 +27,7 @@ export const Toaster: React.FC<ToasterProps> = ({
       } as React.CSSProperties}
     >
       {sortedToasts.map((toast) => (
-        <Toast
+        <ToastComponent
           key={toast.id}
           toast={{ ...toast, ...toastOptions }}
           onRemove={removeToast}

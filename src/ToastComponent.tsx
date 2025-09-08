@@ -5,7 +5,7 @@ import './Toast.css';
 interface ToastProps {
   toast: ToastType;
   onRemove: (id: string) => void;
-  onUpdate: (id: string, updates: Partial<ToastType>) => void;
+  onUpdate: (_id: string, _updates: Partial<ToastType>) => void;
 }
 
 const getIcon = (type: ToastType['type']) => {
@@ -51,7 +51,7 @@ const getIcon = (type: ToastType['type']) => {
   }
 };
 
-export const Toast: React.FC<ToastProps> = ({ toast, onRemove, onUpdate }) => {
+export const ToastComponent: React.FC<ToastProps> = ({ toast, onRemove }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
 
@@ -65,7 +65,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, onRemove, onUpdate }) => {
     if (toast.onOpen) {
       toast.onOpen();
     }
-  }, [toast.onOpen]);
+  }, [toast]);
 
   const handleClose = () => {
     setIsLeaving(true);

@@ -12,7 +12,7 @@ export interface ToastOptions {
   onOpen?: () => void;
 }
 
-export type ToastPosition = 
+export type ToastPosition =
   | 'top-left'
   | 'top-center'
   | 'top-right'
@@ -36,9 +36,9 @@ export interface Toast {
 
 export interface ToastContextType {
   toasts: Toast[];
-  addToast: (toast: Omit<Toast, 'id' | 'createdAt'>) => string;
-  removeToast: (id: string) => void;
-  updateToast: (id: string, updates: Partial<Toast>) => void;
+  addToast: (_toast: Omit<Toast, 'id' | 'createdAt'>) => string;
+  removeToast: (_id: string) => void;
+  updateToast: (_id: string, _updates: Partial<Toast>) => void;
   clearToasts: () => void;
 }
 

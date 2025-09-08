@@ -1,0 +1,237 @@
+.cool-toast {
+  display: flex;
+  align-items: center;
+  min-width: 300px;
+  max-width: 500px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: white;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(100%);
+  opacity: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cool-toast.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.cool-toast.leaving {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.cool-toast-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.cool-toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.cool-toast-message {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #374151;
+}
+
+.cool-toast-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #6b7280;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.cool-toast-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #374151;
+}
+
+/* Toast Types */
+.cool-toast.success {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.cool-toast.success .cool-toast-icon {
+  color: #16a34a;
+}
+
+.cool-toast.success .cool-toast-message {
+  color: #166534;
+}
+
+.cool-toast.error {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+.cool-toast.error .cool-toast-icon {
+  color: #dc2626;
+}
+
+.cool-toast.error .cool-toast-message {
+  color: #991b1b;
+}
+
+.cool-toast.warning {
+  background: #fffbeb;
+  border-color: #fed7aa;
+  color: #92400e;
+}
+
+.cool-toast.warning .cool-toast-icon {
+  color: #d97706;
+}
+
+.cool-toast.warning .cool-toast-message {
+  color: #92400e;
+}
+
+.cool-toast.info {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e40af;
+}
+
+.cool-toast.info .cool-toast-icon {
+  color: #2563eb;
+}
+
+.cool-toast.info .cool-toast-message {
+  color: #1e40af;
+}
+
+.cool-toast.loading {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #374151;
+  cursor: default;
+}
+
+.cool-toast.loading .cool-toast-icon {
+  color: #6b7280;
+  animation: spin 1s linear infinite;
+}
+
+.cool-toast.loading .cool-toast-message {
+  color: #374151;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Position-specific animations */
+.cool-toaster[data-position*="left"] .cool-toast {
+  transform: translateX(-100%);
+}
+
+.cool-toaster[data-position*="left"] .cool-toast.visible {
+  transform: translateX(0);
+}
+
+.cool-toaster[data-position*="left"] .cool-toast.leaving {
+  transform: translateX(-100%);
+}
+
+.cool-toaster[data-position*="bottom"] .cool-toast {
+  transform: translateY(100%);
+}
+
+.cool-toaster[data-position*="bottom"] .cool-toast.visible {
+  transform: translateY(0);
+}
+
+.cool-toaster[data-position*="bottom"] .cool-toast.leaving {
+  transform: translateY(100%);
+}
+
+.cool-toaster[data-position*="bottom"][data-position*="left"] .cool-toast {
+  transform: translate(-100%, 100%);
+}
+
+.cool-toaster[data-position*="bottom"][data-position*="left"] .cool-toast.visible {
+  transform: translate(0, 0);
+}
+
+.cool-toaster[data-position*="bottom"][data-position*="left"] .cool-toast.leaving {
+  transform: translate(-100%, 100%);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .cool-toast {
+    background: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+  }
+
+  .cool-toast-message {
+    color: #f9fafb;
+  }
+
+  .cool-toast-close {
+    color: #9ca3af;
+  }
+
+  .cool-toast-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f9fafb;
+  }
+
+  .cool-toast.success {
+    background: #064e3b;
+    border-color: #065f46;
+  }
+
+  .cool-toast.error {
+    background: #7f1d1d;
+    border-color: #991b1b;
+  }
+
+  .cool-toast.warning {
+    background: #78350f;
+    border-color: #92400e;
+  }
+
+  .cool-toast.info {
+    background: #1e3a8a;
+    border-color: #1e40af;
+  }
+
+  .cool-toast.loading {
+    background: #111827;
+    border-color: #374151;
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "react-cool-toast",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A lightweight, customizable toast notification library for React",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

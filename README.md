@@ -11,9 +11,16 @@ A lightweight, customizable toast notification library for React applications. B
 - 🎭 **Multiple Types**: Success, error, warning, info, and loading toasts
 - ⚡ **Promise Support**: Built-in promise-based notifications
 - 🎯 **Flexible Positioning**: 6 different positions to choose from
-- 🌙 **Dark Mode**: Automatic dark mode support
+- 🌙 **Theme Variants**: 6 built-in themes (light, dark, glass, neon, minimal, colorful)
 - 📦 **TypeScript**: Full TypeScript support with type definitions
 - 🎪 **Animations**: Smooth enter/exit animations
+- 🔊 **Sound Notifications**: Optional sound feedback for different toast types
+- 📊 **Progress Bar**: Visual progress indicator for toast duration
+- 👆 **Swipe to Dismiss**: Touch-friendly swipe gestures on mobile
+- 🎬 **Action Buttons**: Add custom action buttons (Retry, Undo, etc.)
+- 🎯 **Toast Queue**: Smart queue system with max toast limits
+- 🌐 **Rich Content**: Support for HTML content, images, and links
+- 🎛️ **Advanced Controls**: Dismissible, auto-dismiss, and loading states
 
 ## Installation
 
@@ -35,7 +42,12 @@ import { ToastProvider } from 'react-cool-toast';
 
 function App() {
   return (
-    <ToastProvider>
+    <ToastProvider
+      maxToasts={5}
+      enableSounds={true}
+      defaultTheme="light"
+      defaultPosition="top-right"
+    >
       {/* Your app components */}
     </ToastProvider>
   );
@@ -286,6 +298,185 @@ const uploadFile = async (file: File) => {
 };
 ```
 
+## 🆕 New Features
+
+### Theme Variants
+
+Choose from 6 beautiful built-in themes:
+
+```tsx
+// Glass theme with blur effect
+toast.glass('Glassmorphism toast!');
+
+// Neon cyberpunk theme
+toast.neon('Welcome to the future!');
+
+// Minimal clean theme
+toast.minimal('Less is more');
+
+// Colorful gradient theme
+toast.colorful('Rainbow vibes!');
+
+// Or set theme directly
+toast.success('Success!', { theme: 'dark' });
+```
+
+### Sound Notifications
+
+Add audio feedback to your toasts:
+
+```tsx
+// Enable sounds globally in ToastProvider
+<ToastProvider enableSounds={true}>
+
+// Individual toast sounds
+toast.success('Success!', { sound: 'success' });
+toast.error('Error!', { sound: 'error' });
+
+// Silent toast
+toast.silent('No sound for this one');
+
+// Custom sound types: 'success', 'error', 'warning', 'info', 'notification'
+toast('Custom!', { sound: 'notification' });
+```
+
+### Progress Bar
+
+Visual progress indicator for toast duration:
+
+```tsx
+// Show progress bar
+toast.progress('Processing...', { duration: 5000 });
+
+// Or enable via options
+toast.success('Done!', { 
+  showProgress: true,
+  duration: 3000 
+});
+```
+
+### Action Buttons
+
+Add interactive buttons to your toasts:
+
+```tsx
+// Single action
+toast.action(
+  'File uploaded successfully!',
+  [
+    { 
+      label: 'View', 
+      onClick: () => openFile(),
+      style: 'primary' 
+    }
+  ]
+);
+
+// Multiple actions
+toast.action(
+  'Are you sure you want to delete this item?',
+  [
+    { 
+      label: 'Delete', 
+      onClick: () => deleteItem(),
+      style: 'danger' 
+    },
+    { 
+      label: 'Cancel', 
+      onClick: () => console.log('Cancelled'),
+      style: 'secondary' 
+    }
+  ],
+  { type: 'warning' }
+);
+
+// Direct options usage
+toast('Action toast', {
+  actions: [
+    { label: 'Retry', onClick: retryFunction, style: 'primary' },
+    { label: 'Cancel', onClick: cancelFunction, style: 'secondary' }
+  ]
+});
+```
+
+### Rich Content
+
+Support for HTML content, images, and links:
+
+```tsx
+// Rich HTML content
+toast.rich(`
+  <div>
+    <h4>New Message</h4>
+    <p>You have received a message from <strong>John Doe</strong></p>
+    <img src="/avatar.jpg" alt="Avatar" style="width: 40px; border-radius: 50%;" />
+  </div>
+`);
+
+// With links
+toast.rich(`
+  <div>
+    Check out our <a href="https://example.com" target="_blank">new features</a>!
+  </div>
+`);
+```
+
+### Swipe to Dismiss
+
+Touch-friendly swipe gestures (enabled by default on mobile):
+
+```tsx
+// Disable swipe for specific toast
+toast('Cannot swipe this', { swipeable: false });
+
+// Swipe is enabled by default
+toast('Swipe me away on mobile!');
+```
+
+### Advanced Controls
+
+```tsx
+// Non-dismissible toast
+toast('Important notice', { 
+  dismissible: false,
+  duration: 0 // Won't auto-dismiss
+});
+
+// Custom duration
+toast('Quick message', { duration: 1000 });
+
+// Persistent toast (manual dismiss only)
+toast('Stays until dismissed', { duration: 0 });
+```
+
+### Toast Queue Management
+
+Automatically manages toast overflow:
+
+```tsx
+<ToastProvider maxToasts={3}>
+  {/* Only 3 toasts per position will be shown */}
+</ToastProvider>
+
+// Older toasts are automatically removed when limit is reached
+for (let i = 0; i < 10; i++) {
+  toast(`Toast ${i + 1}`);
+}
+```
+
+### Enhanced ToastProvider Options
+
+```tsx
+<ToastProvider
+  maxToasts={5}                    // Max toasts per position
+  enableSounds={true}              // Enable sound notifications
+  defaultTheme="glass"             // Default theme for all toasts
+  defaultPosition="top-center"     // Default position
+>
+  <App />
+</ToastProvider>
+```
+
 ## Styling
 
 The library comes with beautiful default styles, but you can customize them:
@@ -328,7 +519,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT © [Your Name](https://github.com/yourusername)
+MIT © [YEL-59](https://github.com/YEL-59)
 
 ## Acknowledgments
 

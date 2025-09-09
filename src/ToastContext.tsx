@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react';
-import { Toast, ToastContextType, ToastPosition } from './types';
+import { Toast, ToastContextType, ToastPosition, ToastTheme } from './types';
 import { setToastFunctions } from './toast';
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
@@ -7,11 +7,17 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 interface ToastProviderProps {
   children: ReactNode;
   defaultPosition?: ToastPosition;
+  maxToasts?: number;
+  enableSounds?: boolean;
+  defaultTheme?: ToastTheme;
 }
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({ 
   children, 
-  defaultPosition = 'top-right' 
+  defaultPosition = 'top-right',
+  maxToasts = 5,
+  enableSounds = true,
+  defaultTheme
 }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -26,19 +32,33 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
       id,
       createdAt: Date.now(),
       position: toast.position || defaultPosition,
+      theme: toast.theme || defaultTheme,
+      dismissible: toast.dismissible ?? true,
+      swipeable: toast.swipeable ?? true,
+      showProgress: toast.showProgress ?? false,
+      richContent: toast.richContent ?? false,
     };
 
-    setToasts(prev => [...prev, newToast]);
+    setToasts(prev => {
+      // Limit number of toasts
+      const filtered = prev.filter(t => t.position === newToast.position);
+      if (filtered.length >= maxToasts) {
+        // Remove oldest toast
+        const oldestId = filtered[0].id;
+        setTimeout(() => removeToast(oldestId), 100);
+      }
+      return [...prev, newToast];
+    });
 
-    // Auto remove toast after duration
-    if (newToast.duration > 0) {
+    // Don't auto-remove if duration is 0 or if showProgress is true (handled by component)
+    if (newToast.duration > 0 && !newToast.showProgress) {
       setTimeout(() => {
         removeToast(id);
       }, newToast.duration);
     }
 
     return id;
-  }, [defaultPosition, removeToast]);
+  }, [defaultPosition, defaultTheme, maxToasts, removeToast]);
 
   const updateToast = useCallback((id: string, updates: Partial<Toast>) => {
     setToasts(prev => 
@@ -67,8 +87,9 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
       removeToast,
       updateToast,
       clearToasts,
+      enableSounds,
     });
-  }, [addToast, removeToast, updateToast, clearToasts]);
+  }, [addToast, removeToast, updateToast, clearToasts, enableSounds]);
 
   return (
     <ToastContext.Provider value={value}>

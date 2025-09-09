@@ -1,6 +1,6 @@
 {
   "name": "react-cool-toast",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A lightweight, customizable toast notification library for React",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -27,7 +27,7 @@
     "component",
     "typescript"
   ],
-  "author": "Your Name",
+  "author": "YEL-59 <yelbd59@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -62,10 +62,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/react-cool-toast.git"
+    "url": "git+https://github.com/YEL-59/react-cool-toast.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/react-cool-toast/issues"
+    "url": "https://github.com/YEL-59/react-cool-toast/issues"
   },
-  "homepage": "https://github.com/yourusername/react-cool-toast#readme"
+  "homepage": "https://github.com/YEL-59/react-cool-toast#readme"
 }

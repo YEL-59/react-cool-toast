@@ -59,6 +59,102 @@ const ReactDemo: React.FC = () => {
     toast('Bottom Right', { position: 'bottom-right' });
   };
 
+  const handleMultipleToasts = () => {
+    toast.success('First success toast!');
+    toast.error('Second error toast!');
+    toast.warning('Third warning toast!');
+    toast.info('Fourth info toast!');
+    toast.success('Fifth success toast!');
+    toast.error('Sixth error toast!');
+    toast.warning('Seventh warning toast!');
+    toast.info('Eighth info toast!');
+  };
+
+  const handleThemeVariants = () => {
+    toast.glass('Glass theme with blur effect! ✨');
+    setTimeout(() => toast.neon('Neon cyberpunk theme! 🌈'), 500);
+    setTimeout(() => toast.minimal('Minimal clean theme 🤍'), 1000);
+    setTimeout(() => toast.colorful('Colorful gradient theme! 🎨'), 1500);
+  };
+
+  const handleSoundToasts = () => {
+    toast.success('Success with sound! 🔊', { sound: 'success' });
+    setTimeout(() => toast.error('Error with sound! 🔊', { sound: 'error' }), 500);
+    setTimeout(() => toast.silent('Silent toast (no sound) 🤫'), 1000);
+  };
+
+  const handleProgressToasts = () => {
+    toast.progress('Processing with progress bar...', { 
+      duration: 5000,
+      type: 'info'
+    });
+  };
+
+  const handleActionToasts = () => {
+    toast.action(
+      'File uploaded successfully!',
+      [
+        { 
+          label: 'View', 
+          onClick: () => alert('Opening file...'),
+          style: 'primary' 
+        },
+        { 
+          label: 'Share', 
+          onClick: () => alert('Sharing file...'),
+          style: 'secondary' 
+        }
+      ],
+      { type: 'success' }
+    );
+
+    setTimeout(() => {
+      toast.action(
+        'Are you sure you want to delete this item?',
+        [
+          { 
+            label: 'Delete', 
+            onClick: () => alert('Item deleted!'),
+            style: 'danger' 
+          },
+          { 
+            label: 'Cancel', 
+            onClick: () => console.log('Cancelled'),
+            style: 'secondary' 
+          }
+        ],
+        { type: 'warning' }
+      );
+    }, 1000);
+  };
+
+  const handleRichContent = () => {
+    toast.rich(`
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 40px; height: 40px; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">JD</div>
+        <div>
+          <h4 style="margin: 0; font-size: 14px;">New Message</h4>
+          <p style="margin: 4px 0 0 0; font-size: 12px; opacity: 0.8;">You have a message from <strong>John Doe</strong></p>
+        </div>
+      </div>
+    `, { type: 'info', duration: 6000 });
+  };
+
+  const handleAdvancedControls = () => {
+    toast('Non-dismissible toast', { 
+      dismissible: false,
+      duration: 3000,
+      type: 'warning'
+    });
+
+    setTimeout(() => {
+      toast('Persistent toast (stays until dismissed)', { 
+        duration: 0,
+        type: 'info'
+      });
+    }, 1000);
+  };
+
   const handleDismissAll = () => {
     toast.dismissAll();
   };
@@ -161,12 +257,64 @@ const ReactDemo: React.FC = () => {
       </div>
 
       <div style={sectionStyle}>
-        <h2 style={{ color: '#4a5568', marginBottom: '20px' }}>Position Demo</h2>
+        <h2 style={{ color: '#4a5568', marginBottom: '20px' }}>🆕 New Features</h2>
+        <button
+          style={{ 
+            ...buttonStyle, 
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            color: '#333'
+          }}
+          onClick={handleThemeVariants}
+        >
+          🎨 Theme Variants
+        </button>
+        <button
+          style={{ ...buttonStyle, backgroundColor: '#667eea', color: 'white' }}
+          onClick={handleSoundToasts}
+        >
+          🔊 Sound Notifications
+        </button>
+        <button
+          style={{ ...buttonStyle, backgroundColor: '#764ba2', color: 'white' }}
+          onClick={handleProgressToasts}
+        >
+          📊 Progress Bar
+        </button>
+        <button
+          style={{ ...buttonStyle, backgroundColor: '#f093fb', color: 'white' }}
+          onClick={handleActionToasts}
+        >
+          🎬 Action Buttons
+        </button>
+        <button
+          style={{ ...buttonStyle, backgroundColor: '#4facfe', color: 'white' }}
+          onClick={handleRichContent}
+        >
+          🌐 Rich Content
+        </button>
+        <button
+          style={{ ...buttonStyle, backgroundColor: '#43e97b', color: 'white' }}
+          onClick={handleAdvancedControls}
+        >
+          🎛️ Advanced Controls
+        </button>
+      </div>
+
+      <div style={sectionStyle}>
+        <h2 style={{ color: '#4a5568', marginBottom: '20px' }}>Multiple Toasts Demo</h2>
         <button
           style={{ ...buttonStyle, backgroundColor: '#805ad5', color: 'white' }}
           onClick={handleMultiplePositions}
         >
           🎯 Show All Positions
+        </button>
+        <button
+          style={{ ...buttonStyle, backgroundColor: '#e53e3e', color: 'white' }}
+          onClick={handleMultipleToasts}
+        >
+          🎪 Show Multiple Toasts
         </button>
       </div>
 
@@ -205,7 +353,12 @@ const ReactDemo: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <ToastProvider>
+    <ToastProvider
+      maxToasts={5}
+      enableSounds={true}
+      defaultTheme="light"
+      defaultPosition="top-right"
+    >
       <ReactDemo />
       <Toaster />
     </ToastProvider>

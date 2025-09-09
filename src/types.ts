@@ -1,15 +1,32 @@
 export type ToastType = 'success' | 'error' | 'loading' | 'info' | 'warning';
 
+export type ToastTheme = 'light' | 'dark' | 'colorful' | 'minimal' | 'glass' | 'neon';
+
+export type ToastSound = 'success' | 'error' | 'warning' | 'info' | 'loading' | 'notification' | 'none';
+
+export interface ToastAction {
+  label: string;
+  onClick: () => void;
+  style?: 'primary' | 'secondary' | 'danger';
+}
+
 export interface ToastOptions {
   id?: string;
   duration?: number;
   position?: ToastPosition;
   type?: ToastType;
+  theme?: ToastTheme;
   icon?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   onClose?: () => void;
   onOpen?: () => void;
+  sound?: ToastSound | boolean;
+  dismissible?: boolean;
+  swipeable?: boolean;
+  showProgress?: boolean;
+  actions?: ToastAction[];
+  richContent?: boolean;
 }
 
 export type ToastPosition =
@@ -26,12 +43,20 @@ export interface Toast {
   type: ToastType;
   duration: number;
   position: ToastPosition;
+  theme?: ToastTheme;
   icon?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   onClose?: () => void;
   onOpen?: () => void;
+  sound?: ToastSound | boolean;
+  dismissible?: boolean;
+  swipeable?: boolean;
+  showProgress?: boolean;
+  actions?: ToastAction[];
+  richContent?: boolean;
   createdAt: number;
+  progress?: number;
 }
 
 export interface ToastContextType {
@@ -49,4 +74,7 @@ export interface ToasterProps {
   containerClassName?: string;
   containerStyle?: React.CSSProperties;
   toastOptions?: Partial<ToastOptions>;
+  maxToasts?: number;
+  theme?: ToastTheme;
+  enableSounds?: boolean;
 }
